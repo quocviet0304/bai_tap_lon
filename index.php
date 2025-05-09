@@ -50,7 +50,7 @@ ini_set('display_errors', '0');
         <div class="header">
             <div class="header__title">
                 <div class="header__title__description" style="color: #fff;">
-                    TRƯƠNG ĐẠI HỌC CÔNG NGHỆ GTVT
+                    TRƯƠNG ĐẠI HỌC HÀNG HẢI VIỆT NAM
                 </div>
 
                 <div class="header__title__user">
@@ -303,7 +303,7 @@ ini_set('display_errors', '0');
 
         <div class="footer">
             <div class="footer__description">
-                Đường dây nóng: 02435528978
+                Đường dây nóng: 
             </div>
         </div>
 
