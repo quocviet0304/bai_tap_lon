@@ -2,9 +2,9 @@
     session_start();
 
 
-    $host = "dbutt.mysql.database.azure.com";
-    $username = "baoanhhihi";
-    $password = "Vuchien@123";
+    $host = "baitapdb.mysql.database.azure.com";
+    $username = "baitaplon";
+    $password = "ttm62dh@";
     $database = "utt";
 
 
