@@ -159,15 +159,15 @@ if ($result_students->num_rows > 0) {
                       <tr>
                         <td class="container__scores__row">2021_2022</td>
                         <td class="container__scores__row">1</td>
-                        <td class="container__scores__row">8.53</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">3.66</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">8.53</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">3.66</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
@@ -175,15 +175,15 @@ if ($result_students->num_rows > 0) {
                       <tr>
                         <td class="container__scores__row">2021_2022</td>
                         <td class="container__scores__row">2</td>
-                        <td class="container__scores__row">8.53</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">3.66</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">8.53</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">3.66</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
@@ -191,15 +191,15 @@ if ($result_students->num_rows > 0) {
                       <tr>
                         <td class="container__scores__row">2021_2022</td>
                         <td class="container__scores__row">Cả năm</td>
-                        <td class="container__scores__row">8.53</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">3.66</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">8.53</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">3.66</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
@@ -207,15 +207,15 @@ if ($result_students->num_rows > 0) {
                       <tr>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">Toàn Khóa</td>
-                        <td class="container__scores__row">8.53</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">3.66</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">8.53</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row">3.66</td>
+                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
@@ -251,11 +251,20 @@ if ($result_students->num_rows > 0) {
     const data = studentData[sid];
 
     if (data) {
+        function getRandomScore(min = 4, max = 10) {
+        return (Math.random() * (max - min) + min).toFixed(2);
+    }
+
+    // Chọn tất cả các ô có class container__scores__row
+    document.querySelectorAll('.container__scores__row_diem_kol_jo').forEach(td => {
+        td.textContent = getRandomScore();
+    });
       nameField.textContent = data.Name;
       deptField.textContent = data.Department;
       specField.textContent = data.Specialized;
       classField.textContent = data.Class;
     }
+    
   });
 </script>
 </body>
