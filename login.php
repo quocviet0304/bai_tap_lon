@@ -6,8 +6,10 @@
     $username = "baitaplon";
     $password = "ttm62dh@";
     $database = "utt";
-
-
+    $_SESSION['User_name'] = $User;
+        $_SESSION['id'] = 1; 
+        header('Location: index.php');
+    exit;
     //tao ket noi
     $conn = new mysqli($host, $username, $password, $database);
     // Kiểm tra kết nối
