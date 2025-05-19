@@ -1,9 +1,4 @@
-<?php 
-  session_start();
-  if(!isset($_SESSION['User_name']) and !isset($_SESSION['id'])) {
-    header("Location: login.html");
-  }
-?>
+
 
 <?php
       $host = "baitapdb.mysql.database.azure.com";
