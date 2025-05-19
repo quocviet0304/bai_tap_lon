@@ -94,7 +94,7 @@ if ($result_students->num_rows > 0) {
                         <div class="container__information--department" id="studentDepartment"><?= htmlspecialchars($default_student['Department']) ?></div>
                     </div>
                     <div class="container__information--row"> 
-                        <div class="container__information--title">Khoa: </div>
+                        <div class="container__information--title">Ngày sinh: </div>
                         <div class="container__information--department" id="studentDepartment"><?= htmlspecialchars($default_student['age']) ?></div>
                     </div>
                     <div class="container__information--row"> 
