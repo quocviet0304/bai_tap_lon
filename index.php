@@ -94,6 +94,10 @@ if ($result_students->num_rows > 0) {
                         <div class="container__information--department" id="studentDepartment"><?= htmlspecialchars($default_student['Department']) ?></div>
                     </div>
                     <div class="container__information--row"> 
+                        <div class="container__information--title">Khoa: </div>
+                        <div class="container__information--department" id="studentDepartment"><?= htmlspecialchars($default_student['age']) ?></div>
+                    </div>
+                    <div class="container__information--row"> 
                         <div class="container__information--title">Học kì:</div>
                        <select class="container__information--semester" name="Product_Type" >
                             <option value="">2021_2022_1</option>
