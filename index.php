@@ -5,7 +5,20 @@
   }
 ?>
 
+<?php
+      $host = "baitapdb.mysql.database.azure.com";
+    $username = "baitaplon";
+    $password = "ttm62dh@";
+    $database = "utt";
 
+
+    //tao ket noi
+    $conn = new mysqli($host, $username, $password, $database);
+    // Kiểm tra kết nối
+    if ($conn->connect_error) {
+        die("Kết nối tới cơ sở dữ liệu thất bại: " . $conn->connect_error);
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,34 +32,17 @@
 
 
 <?php
-// Kết nối CSDL
-$host = "baitapdb.mysql.database.azure.com";
-$user = "baitaplon";
-$password = "ttm62dh@";
-$dbname = "utt"; // thay bằng tên CSDL của bạn
+$stmt = $conn->prepare("Select * From student Where id = ?");
+$stmt->bind_param("s", $id);
 
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
+$id = $_SESSION['id'];
 
-// Lấy danh sách tất cả sinh viên
-$sql_students = "SELECT * FROM student";
-$result_students = $conn->query($sql_students);
+$stmt->execute(); // Thêm dòng này
 
-// Mặc định chọn sinh viên đầu tiên
-$default_student = null;
-$student_data = [];
+$result = $stmt->get_result();
+$row = mysqli_fetch_assoc($result); //hien thi len form
+ini_set('display_errors', '0');
 
-if ($result_students->num_rows > 0) {
-    while ($student = $result_students->fetch_assoc()) {
-        $student_data[$student['Student_id']] = $student;
-        if (!$default_student) $default_student = $student;
-    }
-} else {
-    echo "Không có dữ liệu sinh viên!";
-    exit;
-}
 ?>
 
 <body>
@@ -58,7 +54,7 @@ if ($result_students->num_rows > 0) {
                 </div>
 
                 <div class="header__title__user">
-                    <h3>Sinh Viên: <?= htmlspecialchars($default_student['Name']) ?></h3>
+                    <h3>Sinh Viên: <?php echo $row['Name'] ?></h3>
                 </div>
 
             </div>
@@ -80,18 +76,11 @@ if ($result_students->num_rows > 0) {
                 <div class="container__information--col">
                     <div class="container__information--row"> 
                         <div class="container__information--title">Mã Sinh Viên:</div>
-						  <select id="studentSelect" class="container__information--id">
-							<?php foreach ($student_data as $sid => $sinfo): ?>
-							  <option value="<?= htmlspecialchars($sid) ?>" <?= ($sid == $default_student['Student_id']) ? 'selected' : '' ?>>
-								<?= htmlspecialchars($sid) ?>
-							  </option>
-							<?php endforeach; ?>
-						  </select>
-						  
+                        <div class="container__information--id"><?php echo $row['Student_id'] ?></div>
                     </div>
                     <div class="container__information--row"> 
                         <div class="container__information--title">Khoa: </div>
-                        <div class="container__information--department" id="studentDepartment"><?= htmlspecialchars($default_student['Department']) ?></div>
+                        <div class="container__information--department"><?php echo $row['Department'] ?></div>
                     </div>
                     <div class="container__information--row"> 
                         <div class="container__information--title">Học kì:</div>
@@ -109,11 +98,11 @@ if ($result_students->num_rows > 0) {
                 <div class="container__information--col">
                     <div class="container__information--row"> 
                         <div class="container__information--title">Họ tên:</div>
-                        <div class="container__information--name" id="studentName"><?= htmlspecialchars($default_student['Name']) ?></div>
+                        <div class="container__information--name"><?php echo $row['Name'] ?></div>
                     </div>
                     <div class="container__information--row"> 
                         <div class="container__information--title">Ngành: </div>
-                       <div class="container__information--specialized" id="studentSpecialized"><?= htmlspecialchars($default_student['Specialized']) ?></div>
+                        <div class="container__information--specialized"><?php echo $row['Specialized'] ?></div>
                     </div>
                     <div class="container__information--row"> 
                         <div class="container__information--title">Lọc:</div>
@@ -131,7 +120,7 @@ if ($result_students->num_rows > 0) {
                     </div>
                     <div class="container__information--row"> 
                         <div class="container__information--title">Lớp: </div>
-                        <div class="container__information--class" id="studentClass"><?= htmlspecialchars($default_student['Class']) ?></div>
+                        <div class="container__information--class"><?php echo $row['Class'] ?></div>
                     </div>
                 </div>
 
@@ -159,15 +148,15 @@ if ($result_students->num_rows > 0) {
                       <tr>
                         <td class="container__scores__row">2021_2022</td>
                         <td class="container__scores__row">1</td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">8.53</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">3.66</td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">8.53</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">3.66</td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
@@ -175,15 +164,15 @@ if ($result_students->num_rows > 0) {
                       <tr>
                         <td class="container__scores__row">2021_2022</td>
                         <td class="container__scores__row">2</td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">8.53</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">3.66</td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">8.53</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">3.66</td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
@@ -191,15 +180,15 @@ if ($result_students->num_rows > 0) {
                       <tr>
                         <td class="container__scores__row">2021_2022</td>
                         <td class="container__scores__row">Cả năm</td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">8.53</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">3.66</td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">8.53</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">3.66</td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
@@ -207,15 +196,15 @@ if ($result_students->num_rows > 0) {
                       <tr>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">Toàn Khóa</td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">8.53</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">3.66</td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">8.53</td>
                         <td class="container__scores__row"></td>
-                        <td class="container__scores__row_diem_kol_jo"><?php echo number_format(mt_rand(400, 1000) / 100, 2); ?></td>
+                        <td class="container__scores__row">3.66</td>
                         <td class="container__scores__row"></td>
                         <td class="container__scores__row">16</td>
                         <td class="container__scores__row"></td>
@@ -224,7 +213,90 @@ if ($result_students->num_rows > 0) {
                     </tbody>
                   </table>
 
-                
+                  <br>
+
+                  <?php
+                  // Chuẩn bị câu lệnh SQL
+                  $stmt = $conn->prepare("SELECT * FROM `2022-2023_2` WHERE id = ?");
+
+                  // Gán giá trị cho tham số
+                  $id = $_SESSION['id'];
+
+                  // Ràng buộc tham số
+                  $stmt->bind_param("s", $id);
+
+                  // Thực thi câu lệnh
+                  $stmt->execute();
+
+                  // Lấy kết quả
+                  $result = $stmt->get_result();
+
+                  // Đếm số bản ghi
+                  $tong_bg = $result->num_rows;
+
+                  $stt = 0;
+                  while ($row = $result->fetch_object()) {
+                      $stt++;
+                      $Subject_id[$stt] = $row->Subject_id;
+                      $Subject_name[$stt] = $row->Subject_name;
+                      $Subject_credits[$stt] = $row->Subject_credits;
+                      $Subject_times[$stt] = $row->Subject_times;
+                      $Student_id[$stt] = $row->Student_id;
+                      $Subject_attendance[$stt] = $row->Subject_attendance;
+                      $Midterm_exam[$stt] = $row->Midterm_exam;
+                      $Final_exam[$stt] = $row->Final_exam;
+                      $Discuss[$stt] = $row->Discuss;
+                  }
+                  ?>
+
+                  <h3>BẢNG ĐIỂM CHI TIẾT</h3>
+                  <table width="100%" align="center" border="1" style="border-collapse: collapse;">
+                    <tbody>
+                      <tr>
+                        <td class="container__scores__header">STT</td>
+                        <td class="container__scores__header">Mã Học phần</td>
+                        <td class="container__scores__header">Số Tc</td>
+                        <td class="container__scores__header">Lần học</td>
+                        <td class="container__scores__header">Lần thi</td>
+                        <td class="container__scores__header">Điểm thứ</td>
+                        <td class="container__scores__header">Là điểm tổng kết môn</td>
+                        <td class="container__scores__header">Đánh giá</td>
+                        <td class="container__scores__header">Mã sinh viên</td>
+                        <td class="container__scores__header">Chuyên cần</td>
+                        <td class="container__scores__header">Kiểm tra GK</td>
+                        <td class="container__scores__header">Thực hành</td>
+                        <td class="container__scores__header">Thi Kết thúc</td>
+                        <td class="container__scores__header">Thảo luận</td>
+                        <td class="container__scores__header">Tổng kết HP</td>
+                      </tr>
+
+                      <?php
+                        for($i=1;$i<=$tong_bg;$i++)
+                        {
+                      ?>
+                      <tr>
+                        <td class="container__scores__row"><?php echo $i ?></td>
+                        <td class="container__scores__row"><?php echo $Subject_id[$i] ?></td>
+                        <td class="container__scores__row"><?php echo $Subject_credits[$i] ?></td>
+                        <td class="container__scores__row"><?php echo $Subject_times[$i] ?></td>
+                        <td class="container__scores__row"><?php echo $Subject_times[$i] ?></td>
+                        <td class="container__scores__row"><?php echo $Subject_times[$i] ?></td>
+                        <td class="container__scores__row"><?php echo $Subject_name[$i]?></td>
+                        <td class="container__scores__row"><?php ?></td>
+                        <td class="container__scores__row"><?php echo $Student_id[$i] ?></td>
+                        <td class="container__scores__row"><?php echo $Subject_attendance[$i] ?></td>
+                        <td class="container__scores__row"><?php echo $Midterm_exam[$i]?></td>
+                        <td class="container__scores__row"><?php ?></td>
+                        <td class="container__scores__row"><?php echo $Final_exam[$i]?></td>
+                        <td class="container__scores__row"><?php echo  $Discuss[$i]?></td>
+                        <td class="container__scores__row"><?php echo ($Final_exam[$i] + $Discuss[$i] + $Midterm_exam[$i] + $Subject_attendance[$i]) / 4?></td>
+                      </tr>
+
+                      <?php
+                        }
+                      ?>
+                    </tbody>
+                  </table>
                   
             </div>
         </div>
@@ -237,36 +309,6 @@ if ($result_students->num_rows > 0) {
 
 
     </div>
-	<script>
-  const studentData = <?= json_encode($student_data) ?>;
-
-  const select = document.getElementById('studentSelect');
-  const nameField = document.getElementById('studentName');
-  const deptField = document.getElementById('studentDepartment');
-  const specField = document.getElementById('studentSpecialized');
-  const classField = document.getElementById('studentClass');
-
-  select.addEventListener('change', function () {
-    const sid = this.value;
-    const data = studentData[sid];
-
-    if (data) {
-        function getRandomScore(min = 4, max = 10) {
-        return (Math.random() * (max - min) + min).toFixed(2);
-    }
-
-    // Chọn tất cả các ô có class container__scores__row
-    document.querySelectorAll('.container__scores__row_diem_kol_jo').forEach(td => {
-        td.textContent = getRandomScore();
-    });
-      nameField.textContent = data.Name;
-      deptField.textContent = data.Department;
-      specField.textContent = data.Specialized;
-      classField.textContent = data.Class;
-    }
-    
-  });
-</script>
 </body>
 
 </html>
